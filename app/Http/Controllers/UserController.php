@@ -17,8 +17,6 @@ class UserController extends Controller
         $users = User::get();
         $user = User::first();
 
-        ddd($user->phoneNumbers);
-
         return view('users.index', [
             'users' => $users
         ]);

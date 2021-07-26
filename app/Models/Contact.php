@@ -35,4 +35,9 @@ class Contact extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function stars()
+    {
+        return $this->morphMany(Star::class, 'starrable');
+    }
 }

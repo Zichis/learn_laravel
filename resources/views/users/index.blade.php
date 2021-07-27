@@ -3,12 +3,18 @@
 @section('title', 'Users')
 
 @section('section')
-    <example-component></example-component>
-    @forelse ($users as $user)
-        <p>{{ $user->name }}</p>
+    <div class="p-5">
+        <button class="py-1 px-3 bg-blue-500 text-white rounded hover:bg-blue-600">Click</button>
+        <p>{{ $users->count() }} {{ Illuminate\Support\Str::plural('user', $users->count()) }}</p>
+        @forelse ($users as $user)
+            <p>{{ $user->name }}</p>
         @empty
-        <p>No user found</p>
-    @endforelse
+            <p>No user found</p>
+        @endforelse
+        <div>
+            {{ $users->links() }}
+        </div>
+    </div>
 @endsection
 
 @section('footerScripts')

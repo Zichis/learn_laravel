@@ -4,10 +4,11 @@
 
 @section('section')
     <div class="p-5">
-        <button class="py-1 px-3 bg-blue-500 text-white rounded hover:bg-blue-600">Click</button>
-        <p>{{ $users->count() }} {{ Illuminate\Support\Str::plural('user', $users->count()) }}</p>
+        <a href="{{ route('users.create') }}" class="px-3 py-2 bg-blue-500 text-white hover:bg-blue-600 rounded">Add User</a>
         @forelse ($users as $user)
-            <p>{{ $user->name }}</p>
+            <div class="p-2 my-3 shadow-lg rounded bg-white">
+                <p>{{ $user->name }}</p>
+            </div>
         @empty
             <p>No user found</p>
         @endforelse

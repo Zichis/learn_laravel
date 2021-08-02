@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Rules\CompanyEmail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -14,8 +16,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::paginate(5);
-        $user = User::first();
+        $users = User::orderBy('name')->paginate(5);
+        $user = User::with('profilePicture')->first();
 
         return view('users.index', [
             'users' => $users
@@ -29,7 +31,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('users.create');
     }
 
     /**
@@ -40,7 +42,26 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'email' => ['required', 'email', 'unique:users', new CompanyEmail],
+            'password' => 'required'
+        ]);
+
+        User::create([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'password' => Hash::make($request->input('password'))
+        ]);
+        // $user = User::first();
+
+        // if ($request->file('profile_picture')->isValid()) {
+        //     $imageName = str_replace(' ', '_', $user->name) . '_profile.' . $request->profile_picture->extension();
+        //     $user->profilePicture()->create(['name' => $imageName]);
+        //     $request->profile_picture->storeAs('public/profiles', $imageName);
+        // }
+
+        return redirect()->route('users.index');
     }
 
     /**

@@ -78,4 +78,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Star::class);
     }
+
+    public function profilePicture()
+    {
+        return $this->morphOne(Image::class, 'imageable');
+    }
 }

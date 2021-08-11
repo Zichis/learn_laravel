@@ -2,13 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Developer;
 use App\Models\User;
 use App\Rules\CompanyEmail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        // $this->middleware('can:create-user')->only('index');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -18,6 +25,11 @@ class UserController extends Controller
     {
         $users = User::orderBy('name')->paginate(5);
         $user = User::with('profilePicture')->first();
+
+        // $developer = Developer::first();
+
+        $loggedDeveloper = auth()->guard('my-guard')->user();
+        // ddd($loggedDeveloper);
 
         return view('users.index', [
             'users' => $users
@@ -31,6 +43,10 @@ class UserController extends Controller
      */
     public function create()
     {
+        if (Gate::denies('create-user')) {
+            abort(403);
+        }
+
         return view('users.create');
     }
 
@@ -42,6 +58,10 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        if (!Gate::allows('create-user')) {
+            abort(403);
+        }
+
         $request->validate([
             'name' => 'required',
             'email' => ['required', 'email', 'unique:users', new CompanyEmail],

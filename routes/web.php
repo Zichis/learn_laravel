@@ -25,3 +25,9 @@ Route::resource('users', UserController::class);
 Route::resource('contacts', ContactController::class);
 
 Route::resource('phone-numbers', PhoneNumberController::class);
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+require __DIR__.'/auth.php';

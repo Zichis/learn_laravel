@@ -45,7 +45,8 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
-        ]
+        ],
+        "tests": "./vendor/bin/phpunit --coverage-text --coverage-html=coverage --coverage-clover coverage.xml"
     },
     "extra": {
         "laravel": {

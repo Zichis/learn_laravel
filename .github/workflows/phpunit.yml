@@ -47,16 +47,16 @@ jobs:
     #  run: |
     #    mkdir -p database
     #    touch database/database.sqlite
-    - name: Execute tests (Unit tests) via PHPUnit
+    - name: Run migrations
       env:
         DB_CONNECTION: mysql
         DB_DATABASE: db_test
         DB_PORT: 33306
         DB_USER: root
         DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-      run: |
-        php artisan migrate
-        vendor/phpunit/phpunit/phpunit --testsuite Unit
+      run: php artisan migrate
+    - name: Execute unit tests
+      run: vendor/phpunit/phpunit/phpunit --testsuite Unit
 
   feature-tests:
 
@@ -98,13 +98,13 @@ jobs:
     #  run: |
     #    mkdir -p database
     #    touch database/database.sqlite
-    - name: Execute tests (Feature tests) via PHPUnit
+    - name: Run migrations
       env:
         DB_CONNECTION: mysql
         DB_DATABASE: db_test
         DB_PORT: 33306
         DB_USER: root
         DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-      run: |
-        php artisan migrate
-        vendor/phpunit/phpunit/phpunit --testsuite Feature
+      run: php artisan migrate
+    - name: Execute feature tests
+      run: vendor/phpunit/phpunit/phpunit --testsuite Feature

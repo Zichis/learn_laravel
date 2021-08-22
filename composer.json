@@ -20,8 +20,10 @@
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.2",
         "nunomaduro/collision": "^5.0",
+        "phpstan/phpstan": "^0.12.94",
         "phpunit/phpunit": "^9.3.3",
-        "spatie/laravel-web-tinker": "^1.7"
+        "spatie/laravel-web-tinker": "^1.7",
+        "squizlabs/php_codesniffer": "*"
     },
     "autoload": {
         "psr-4": {
@@ -45,7 +47,8 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
-        ]
+        ],
+        "tests": "./vendor/bin/phpunit --coverage-text --coverage-html=coverage --coverage-clover coverage.xml"
     },
     "extra": {
         "laravel": {

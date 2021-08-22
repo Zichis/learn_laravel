@@ -17,11 +17,4 @@ class ContactController extends Controller
             'contacts' => $contacts
         ]);
     }
-
-    public function create()
-    {
-        $contact = Contact::first();
-
-        event(new ContactAddedEvent($contact));
-    }
 }

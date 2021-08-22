@@ -43,9 +43,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        if (Gate::denies('create-user')) {
+        /* if (Gate::denies('create-user')) {
             abort(403);
-        }
+        } */
 
         return view('users.create');
     }
@@ -58,9 +58,9 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        if (!Gate::allows('create-user')) {
+        /* if (!Gate::allows('create-user')) {
             abort(403);
-        }
+        } */
 
         $request->validate([
             'name' => 'required',
